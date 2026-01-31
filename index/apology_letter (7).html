@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On my repeated mistakes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Merriweather:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #e0f2f1 100%);
+            min-height: 100vh;
+            font-family: 'Merriweather', serif;
+            color: #4a4a4a;
+            line-height: 2.0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 60px 50px;
+            box-shadow: 0 8px 32px rgba(180, 220, 200, 0.3);
+        }
+
+        .gecko-doodle {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .gecko-doodle svg {
+            width: 120px;
+            height: auto;
+            opacity: 0.7;
+        }
+
+        h1 {
+            font-family: 'Libre Baskerville', serif;
+            font-size: 2.5em;
+            font-weight: 600;
+            text-align: center;
+            color: #81c784;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+        }
+
+        .letter-content {
+            font-size: 1.05em;
+            text-align: left;
+            margin-bottom: 40px;
+        }
+
+        .letter-content p {
+            margin-bottom: 2.2em;
+            text-indent: 2em;
+        }
+
+        .letter-content p:first-child {
+            text-indent: 0;
+        }
+
+        .signature {
+            text-align: right;
+            font-style: italic;
+            margin-top: 40px;
+            margin-right: 20px;
+            font-size: 1.1em;
+            color: #6a6a6a;
+        }
+
+        .frog-doodle {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .frog-doodle svg {
+            width: 100px;
+            height: auto;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 30px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .letter-content {
+                font-size: 1em;
+            }
+        }
+
+        /* Hidden margin frogs */
+        .margin-frog {
+            position: fixed;
+            opacity: 0;
+            transition: opacity 0.5s ease, transform 0.3s ease;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        body:hover .margin-frog {
+            opacity: 0.7;
+            transform: scale(1.1);
+        }
+
+        .margin-frog.scrolled-past {
+            opacity: 0 !important;
+        }
+
+        .margin-frog.left {
+            left: 2%;
+        }
+
+        .margin-frog.right {
+            right: 2%;
+        }
+
+        .margin-frog svg {
+            width: 60px;
+            height: auto;
+            filter: drop-shadow(2px 2px 4px rgba(125, 155, 125, 0.3));
+        }
+
+        @media (max-width: 1024px) {
+            .margin-frog {
+                display: none;
+            }
+        }
+
+        /* Scrolling gecko */
+        .scroll-gecko {
+            position: fixed;
+            right: calc(50% + 370px);
+            top: 20%;
+            width: 80px;
+            height: auto;
+            z-index: 1001;
+            transition: top 0.3s ease-out;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .scroll-gecko.walking {
+            animation: geckoWalk 0.4s steps(4) infinite;
+        }
+
+        .scroll-gecko.running-bottom {
+            animation: geckoRunBottom 1.5s ease-in-out forwards;
+        }
+
+        .scroll-gecko.running-up {
+            animation: geckoRunUp 1.5s ease-in-out forwards;
+        }
+
+        @keyframes geckoWalk {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-2px) rotate(-1deg); }
+            50% { transform: translateY(0px) rotate(0deg); }
+            75% { transform: translateY(-2px) rotate(1deg); }
+        }
+
+        @keyframes geckoRunBottom {
+            0% {
+                top: 85%;
+                right: calc(50% + 370px);
+                transform: rotate(0deg);
+            }
+            50% {
+                top: 95%;
+                right: calc(50% + 370px);
+                transform: rotate(90deg);
+            }
+            75% {
+                top: 95%;
+                right: calc(50% - 370px);
+                transform: rotate(90deg) scaleX(-1);
+            }
+            100% {
+                top: 95%;
+                right: calc(50% - 370px);
+                transform: rotate(90deg) scaleX(-1);
+            }
+        }
+
+        @keyframes geckoRunUp {
+            0% {
+                top: 95%;
+                right: calc(50% - 370px);
+                transform: rotate(90deg) scaleX(-1);
+            }
+            25% {
+                top: 95%;
+                right: calc(50% - 370px);
+                transform: rotate(180deg) scaleX(-1);
+            }
+            100% {
+                top: 10%;
+                right: calc(50% + 370px);
+                transform: rotate(180deg) scaleX(-1);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .scroll-gecko {
+                right: 5%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .scroll-gecko {
+                display: none;
+            }
+        }
+
+        /* Margin hearts */
+        .margin-heart {
+            position: fixed;
+            opacity: 0.6;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .margin-heart svg {
+            width: 30px;
+            height: auto;
+            filter: drop-shadow(1px 1px 3px rgba(168, 213, 168, 0.3));
+        }
+
+        @media (max-width: 1024px) {
+            .margin-heart {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Scrolling gecko that walks down the margin -->
+    <div class="scroll-gecko" id="scrollGecko">
+        <svg viewBox="0 0 100 140" xmlns="http://www.w3.org/2000/svg">
+            <!-- Gecko from behind, facing UPWARD (flipped) - with 4 legs -->
+            
+            <!-- Tail (at top now) -->
+            <path d="M 50 8 Q 48 18 50 25" 
+                  stroke="#6b8b6e" stroke-width="3.0" fill="none" stroke-linecap="round"/>
+            <!-- Tail segments -->
+            <line x1="48" y1="12" x2="52" y2="12" stroke="#6b8b6e" stroke-width="1.5"/>
+            <line x1="49" y1="19" x2="51" y2="19" stroke="#6b8b6e" stroke-width="1.3"/>
+            
+            <!-- Body segments going down (reversed direction) -->
+            <path d="M 50 25 Q 52 35 50 45 Q 48 55 50 65 Q 52 75 50 85 Q 48 95 50 105" 
+                  stroke="#6b8b6e" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <!-- Body width/sides -->
+            <path d="M 40 30 Q 38 40 40 50 Q 38 60 40 70 Q 38 80 40 90" 
+                  stroke="#6b8b6e" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+            <path d="M 60 30 Q 62 40 60 50 Q 62 60 60 70 Q 62 80 60 90" 
+                  stroke="#6b8b6e" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+            
+            <!-- Back left leg (at top) -->
+            <path d="M 40 35 L 28 42 M 28 42 L 25 45 M 28 42 L 28 45 M 28 42 L 31 45" 
+                  stroke="#6b8b6e" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+            <!-- Back right leg (at top) -->
+            <path d="M 60 35 L 72 42 M 72 42 L 69 45 M 72 42 L 72 45 M 72 42 L 75 45" 
+                  stroke="#6b8b6e" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+            
+            <!-- Front left leg (at bottom) -->
+            <path d="M 40 75 L 28 82 M 28 82 L 25 85 M 28 82 L 28 85 M 28 82 L 31 85" 
+                  stroke="#6b8b6e" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+            <!-- Front right leg (at bottom) -->
+            <path d="M 60 75 L 72 82 M 72 82 L 69 85 M 72 82 L 72 85 M 72 82 L 75 85" 
+                  stroke="#6b8b6e" stroke-width="2.3" fill="none" stroke-linecap="round"/>
+            
+            <!-- Body texture spots -->
+            <circle cx="46" cy="40" r="1.2" fill="#6b8b6e" opacity="0.4"/>
+            <circle cx="54" cy="45" r="1.2" fill="#6b8b6e" opacity="0.4"/>
+            <circle cx="48" cy="55" r="1.2" fill="#6b8b6e" opacity="0.4"/>
+            <circle cx="52" cy="60" r="1.2" fill="#6b8b6e" opacity="0.4"/>
+            <circle cx="50" cy="70" r="1.2" fill="#6b8b6e" opacity="0.4"/>
+            <circle cx="47" cy="80" r="1" fill="#6b8b6e" opacity="0.4"/>
+            <circle cx="53" cy="85" r="1" fill="#6b8b6e" opacity="0.4"/>
+            
+            <!-- Head (bottom view, facing up - now at bottom) -->
+            <ellipse cx="50" cy="105" rx="14" ry="11" stroke="#6b8b6e" stroke-width="2.8" fill="none"/>
+            <!-- Small head bumps/eyes from behind -->
+            <circle cx="42" cy="108" r="2.5" fill="#6b8b6e" opacity="0.5"/>
+            <circle cx="58" cy="108" r="2.5" fill="#6b8b6e" opacity="0.5"/>
+        </svg>
+    </div>
+
+    <!-- Sporadic hearts in margins -->
+    <div class="margin-heart" style="top: 8%; left: 4%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#a8d5a8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#a8d5a8" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 22%; right: 5%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#81c784" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#81c784" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 35%; left: 2.5%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#7d9b7d" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#7d9b7d" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 44%; right: 3.5%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#a8d5a8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#a8d5a8" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 51%; left: 3.8%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#81c784" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#81c784" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 63%; right: 4.2%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#7d9b7d" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#7d9b7d" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 74%; left: 2.2%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#a8d5a8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#a8d5a8" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 82%; right: 3%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#81c784" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#81c784" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 14%; left: 5.5%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#7d9b7d" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#7d9b7d" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <div class="margin-heart" style="top: 89%; left: 4.5%;">
+        <svg viewBox="0 0 50 45" xmlns="http://www.w3.org/2000/svg">
+            <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                  stroke="#a8d5a8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="16" cy="9" r="1.2" fill="#a8d5a8" opacity="0.6"/>
+        </svg>
+    </div>
+
+    <script>
+        // Gecko scroll animation
+        let lastScrollTop = 0;
+        let scrollTimeout;
+        const gecko = document.getElementById('scrollGecko');
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            // Position gecko based on scroll (between 10% and 85% of viewport height)
+            const geckoPosition = 10 + (scrollPercent / 100) * 75;
+            gecko.style.top = geckoPosition + '%';
+            
+            // Add walking animation while scrolling
+            gecko.classList.add('walking');
+            
+            // Remove walking animation after scrolling stops
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                gecko.classList.remove('walking');
+            }, 150);
+            
+            lastScrollTop = scrollTop;
+        });
+    </script>
+    <!-- Hidden margin frogs that appear on hover -->
+    <div class="margin-frog left" style="top: 18%; left: 3%;" data-scroll-threshold="200">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="40" cy="50" rx="24" ry="18" stroke="#7d9b7d" stroke-width="2.2" fill="none"/>
+            <ellipse cx="40" cy="40" rx="20" ry="15" stroke="#7d9b7d" stroke-width="2.2" fill="none"/>
+            <circle cx="34" cy="37" r="5" stroke="#7d9b7d" stroke-width="2" fill="none"/>
+            <circle cx="46" cy="37" r="5" stroke="#7d9b7d" stroke-width="2" fill="none"/>
+            <circle cx="33.5" cy="36" r="2" fill="#7d9b7d"/>
+            <circle cx="45.5" cy="36" r="2" fill="#7d9b7d"/>
+            <circle cx="35" cy="35" r="1" fill="white" opacity="0.8"/>
+            <circle cx="47" cy="35" r="1" fill="white" opacity="0.8"/>
+            <ellipse cx="27" cy="41" rx="2.5" ry="1.8" stroke="#e88a8a" stroke-width="1.3" fill="none" opacity="0.6"/>
+            <ellipse cx="53" cy="41" rx="2.5" ry="1.8" stroke="#e88a8a" stroke-width="1.3" fill="none" opacity="0.6"/>
+            <path d="M 36 45 Q 40 48 44 45" stroke="#7d9b7d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M 24 53 L 18 61 M 18 61 L 16 63 M 18 61 L 20 63" stroke="#7d9b7d" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M 56 53 L 62 61 M 62 61 L 60 63 M 62 61 L 64 63" stroke="#7d9b7d" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <div class="margin-frog right" style="top: 27%; right: 4%;" data-scroll-threshold="350">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="40" cy="48" rx="22" ry="16" stroke="#7d9b7d" stroke-width="2.1" fill="none"/>
+            <ellipse cx="40" cy="38" rx="18" ry="14" stroke="#7d9b7d" stroke-width="2.1" fill="none"/>
+            <circle cx="35" cy="35" r="4.5" stroke="#7d9b7d" stroke-width="1.9" fill="none"/>
+            <circle cx="45" cy="35" r="4.5" stroke="#7d9b7d" stroke-width="1.9" fill="none"/>
+            <circle cx="34.5" cy="34" r="1.8" fill="#7d9b7d"/>
+            <circle cx="44.5" cy="34" r="1.8" fill="#7d9b7d"/>
+            <circle cx="36" cy="33.5" r="0.9" fill="white" opacity="0.8"/>
+            <circle cx="46" cy="33.5" r="0.9" fill="white" opacity="0.8"/>
+            <ellipse cx="28" cy="39" rx="2.3" ry="1.6" stroke="#e88a8a" stroke-width="1.2" fill="none" opacity="0.6"/>
+            <ellipse cx="52" cy="39" rx="2.3" ry="1.6" stroke="#e88a8a" stroke-width="1.2" fill="none" opacity="0.6"/>
+            <path d="M 37 43 Q 40 45 43 43" stroke="#7d9b7d" stroke-width="1.7" fill="none" stroke-linecap="round"/>
+            <path d="M 26 51 L 21 58 M 21 58 L 19 60 M 21 58 L 23 60" stroke="#7d9b7d" stroke-width="1.9" fill="none" stroke-linecap="round"/>
+            <path d="M 54 51 L 59 58 M 59 58 L 57 60 M 59 58 L 61 60" stroke="#7d9b7d" stroke-width="1.9" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <div class="margin-frog left" style="top: 42%; left: 1.5%;" data-scroll-threshold="600">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="40" cy="52" rx="26" ry="19" stroke="#7d9b7d" stroke-width="2.3" fill="none"/>
+            <ellipse cx="40" cy="41" rx="21" ry="16" stroke="#7d9b7d" stroke-width="2.3" fill="none"/>
+            <circle cx="34" cy="38" r="5.2" stroke="#7d9b7d" stroke-width="2.0" fill="none"/>
+            <circle cx="46" cy="38" r="5.2" stroke="#7d9b7d" stroke-width="2.0" fill="none"/>
+            <circle cx="33.5" cy="37" r="2.1" fill="#7d9b7d"/>
+            <circle cx="45.5" cy="37" r="2.1" fill="#7d9b7d"/>
+            <circle cx="35" cy="36" r="1.0" fill="white" opacity="0.8"/>
+            <circle cx="47" cy="36" r="1.0" fill="white" opacity="0.8"/>
+            <ellipse cx="26" cy="43" rx="2.6" ry="1.7" stroke="#e88a8a" stroke-width="1.3" fill="none" opacity="0.6"/>
+            <ellipse cx="54" cy="43" rx="2.6" ry="1.7" stroke="#e88a8a" stroke-width="1.3" fill="none" opacity="0.6"/>
+            <path d="M 36 47 Q 40 50 44 47" stroke="#7d9b7d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M 23 55 L 17 63 M 17 63 L 15 65 M 17 63 L 19 65" stroke="#7d9b7d" stroke-width="2.0" fill="none" stroke-linecap="round"/>
+            <path d="M 57 55 L 63 63 M 63 63 L 61 65 M 63 63 L 65 65" stroke="#7d9b7d" stroke-width="2.0" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <div class="margin-frog right" style="top: 56%; right: 2.5%;" data-scroll-threshold="800">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="40" cy="49" rx="23" ry="17" stroke="#7d9b7d" stroke-width="2.2" fill="none"/>
+            <ellipse cx="40" cy="39" rx="19" ry="14" stroke="#7d9b7d" stroke-width="2.2" fill="none"/>
+            <circle cx="35" cy="36" r="4.8" stroke="#7d9b7d" stroke-width="1.9" fill="none"/>
+            <circle cx="45" cy="36" r="4.8" stroke="#7d9b7d" stroke-width="1.9" fill="none"/>
+            <circle cx="34.5" cy="35" r="1.9" fill="#7d9b7d"/>
+            <circle cx="44.5" cy="35" r="1.9" fill="#7d9b7d"/>
+            <circle cx="36" cy="34" r="0.95" fill="white" opacity="0.8"/>
+            <circle cx="46" cy="34" r="0.95" fill="white" opacity="0.8"/>
+            <ellipse cx="27" cy="40" rx="2.4" ry="1.7" stroke="#e88a8a" stroke-width="1.25" fill="none" opacity="0.6"/>
+            <ellipse cx="53" cy="40" rx="2.4" ry="1.7" stroke="#e88a8a" stroke-width="1.25" fill="none" opacity="0.6"/>
+            <path d="M 37 44 Q 40 47 43 44" stroke="#7d9b7d" stroke-width="1.75" fill="none" stroke-linecap="round"/>
+            <path d="M 25 52 L 20 59 M 20 59 L 18 61 M 20 59 L 22 61" stroke="#7d9b7d" stroke-width="1.95" fill="none" stroke-linecap="round"/>
+            <path d="M 55 52 L 60 59 M 60 59 L 58 61 M 60 59 L 62 61" stroke="#7d9b7d" stroke-width="1.95" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <div class="margin-frog left" style="top: 68%; left: 2.8%;" data-scroll-threshold="1050">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="40" cy="51" rx="25" ry="18" stroke="#7d9b7d" stroke-width="2.25" fill="none"/>
+            <ellipse cx="40" cy="40" rx="20" ry="15" stroke="#7d9b7d" stroke-width="2.25" fill="none"/>
+            <circle cx="34" cy="37" r="5.0" stroke="#7d9b7d" stroke-width="2.0" fill="none"/>
+            <circle cx="46" cy="37" r="5.0" stroke="#7d9b7d" stroke-width="2.0" fill="none"/>
+            <circle cx="33.5" cy="36" r="2.0" fill="#7d9b7d"/>
+            <circle cx="45.5" cy="36" r="2.0" fill="#7d9b7d"/>
+            <circle cx="35" cy="35" r="1.0" fill="white" opacity="0.8"/>
+            <circle cx="47" cy="35" r="1.0" fill="white" opacity="0.8"/>
+            <ellipse cx="27" cy="41" rx="2.5" ry="1.75" stroke="#e88a8a" stroke-width="1.3" fill="none" opacity="0.6"/>
+            <ellipse cx="53" cy="41" rx="2.5" ry="1.75" stroke="#e88a8a" stroke-width="1.3" fill="none" opacity="0.6"/>
+            <path d="M 36 46 Q 40 49 44 46" stroke="#7d9b7d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M 24 54 L 18 62 M 18 62 L 16 64 M 18 62 L 20 64" stroke="#7d9b7d" stroke-width="2.0" fill="none" stroke-linecap="round"/>
+            <path d="M 56 54 L 62 62 M 62 62 L 60 64 M 62 62 L 64 64" stroke="#7d9b7d" stroke-width="2.0" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <div class="margin-frog right" style="top: 79%; right: 3.5%;" data-scroll-threshold="1300">
+        <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="40" cy="50" rx="24" ry="18" stroke="#7d9b7d" stroke-width="2.2" fill="none"/>
+            <ellipse cx="40" cy="40" rx="20" ry="15" stroke="#7d9b7d" stroke-width="2.2" fill="none"/>
+            <circle cx="34" cy="37" r="5" stroke="#7d9b7d" stroke-width="2" fill="none"/>
+            <circle cx="46" cy="37" r="5" stroke="#7d9b7d" stroke-width="2" fill="none"/>
+            <circle cx="33.5" cy="36" r="2" fill="#7d9b7d"/>
+            <circle cx="45.5" cy="36" r="2" fill="#7d9b7d"/>
+            <circle cx="35" cy="35" r="1" fill="white" opacity="0.8"/>
+            <circle cx="47" cy="35" r="1" fill="white" opacity="0.8"/>
+            <ellipse cx="27" cy="41" rx="2.5" ry="1.8" stroke="#e88a8a" stroke-width="1.3" fill="none" opacity="0.6"/>
+            <ellipse cx="53" cy="41" rx="2.5" ry="1.8" stroke="#e88a8a" stroke-width="1.3" fill="none" opacity="0.6"/>
+            <path d="M 36 45 Q 40 48 44 45" stroke="#7d9b7d" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M 24 53 L 18 61 M 18 61 L 16 63 M 18 61 L 20 63" stroke="#7d9b7d" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <path d="M 56 53 L 62 61 M 62 61 L 60 63 M 62 61 L 64 63" stroke="#7d9b7d" stroke-width="2" fill="none" stroke-linecap="round"/>
+        </svg>
+    </div>
+
+    <div class="container">
+        <div class="gecko-doodle">
+            <svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg">
+                <!-- More realistic gecko with texture -->
+                <!-- Body -->
+                <path d="M 80 70 Q 95 65 115 65 Q 135 65 155 67 Q 175 69 190 68 Q 205 67 220 62" 
+                      stroke="#6b8b6e" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <path d="M 80 70 Q 95 73 115 73 Q 135 73 155 74 Q 175 75 190 74 Q 205 73 220 68" 
+                      stroke="#6b8b6e" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                <!-- Tail with segments -->
+                <path d="M 220 65 Q 235 58 245 57 Q 252 58 258 62 Q 262 66 264 70" 
+                      stroke="#6b8b6e" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                <line x1="225" y1="63" x2="227" y2="66" stroke="#6b8b6e" stroke-width="1.5"/>
+                <line x1="235" y1="59" x2="237" y2="62" stroke="#6b8b6e" stroke-width="1.5"/>
+                <line x1="245" y1="58" x2="247" y2="61" stroke="#6b8b6e" stroke-width="1.5"/>
+                <line x1="255" y1="61" x2="257" y2="64" stroke="#6b8b6e" stroke-width="1.5"/>
+                <!-- Head with detail -->
+                <ellipse cx="75" cy="70" rx="12" ry="10" stroke="#6b8b6e" stroke-width="3" fill="none"/>
+                <circle cx="70" cy="67" r="3" stroke="#6b8b6e" stroke-width="2" fill="none"/>
+                <circle cx="69.5" cy="66.5" r="1.2" fill="#6b8b6e"/>
+                <path d="M 72 75 Q 74 76 76 75" stroke="#6b8b6e" stroke-width="1.5" fill="none"/>
+                <!-- Front legs with toes -->
+                <path d="M 100 68 L 95 80 M 95 80 L 92 83 M 95 80 L 95 84 M 95 80 L 98 83" 
+                      stroke="#6b8b6e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <path d="M 130 68 L 125 80 M 125 80 L 122 83 M 125 80 L 125 84 M 125 80 L 128 83" 
+                      stroke="#6b8b6e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <!-- Back legs with toes -->
+                <path d="M 165 70 L 160 82 M 160 82 L 157 85 M 160 82 L 160 86 M 160 82 L 163 85" 
+                      stroke="#6b8b6e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <path d="M 195 69 L 190 81 M 190 81 L 187 84 M 190 81 L 190 85 M 190 81 L 193 84" 
+                      stroke="#6b8b6e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <!-- Body texture marks -->
+                <circle cx="110" cy="69" r="1" fill="#6b8b6e" opacity="0.4"/>
+                <circle cx="140" cy="70" r="1" fill="#6b8b6e" opacity="0.4"/>
+                <circle cx="170" cy="71" r="1" fill="#6b8b6e" opacity="0.4"/>
+                <circle cx="200" cy="69" r="1" fill="#6b8b6e" opacity="0.4"/>
+                <circle cx="125" cy="72" r="0.8" fill="#6b8b6e" opacity="0.4"/>
+                <circle cx="155" cy="73" r="0.8" fill="#6b8b6e" opacity="0.4"/>
+                <circle cx="185" cy="72" r="0.8" fill="#6b8b6e" opacity="0.4"/>
+            </svg>
+        </div>
+
+        <h1>On my repeated mistakes</h1>
+
+        <div class="letter-content">
+            <p>Joey, though I want to begin this with an 'I love you,' I first would like to acknowledge the harm I have caused. The pattern of me being in a bad place emotionally and taking it out on you is definitely a real issue within our relationship. I need to do better at validating your feelings and intuition, and I apologize for my crude laughs and moments when I attempt to diminish your feelings. For this to work, I know how I handle my emotions needs to change, and I am deeply ashamed for threatening our relationship by hurting you so intensely.</p>
+
+            <p>It is not my goal to be abusive in this relationship. This may be something you question, with good cause, as me hurting you is an all too familiar feeling. I regret this immensely. Instead of a partnership of love letters, picnics, emotional support, and acceptance, I have created one of personal attacks and lashing out. It is my belief that this behavior is a byproduct of my insecurity and immaturity, not something I intentionally do to you to take my anger out. Regardless of the source and intention, the harm done to you is what matters, and it is disgusting, unacceptable, and will cease.</p>
+
+            <p>When I think about who I should be in this relationship, it both shames and motivates me to do better for the both of us. I want to be a secure, reliable, loving, supportive, and equitable partner. I am young, and still learning and growing, but I know these core tenants of healthy partnership will help ours flourish. I want to learn how to give you the autonomy you need, respecting your boundaries and allowing you the freedom that you desire. I want to be more understanding with time and work, giving you the space (both emotional and otherwise) to build AREA up into the amazing company I know you can make it into. I want to not let things of our past, or future, damage my ego. I want to have a healthy relationship where we both feel loved, respected, and supported. I'm sorry for not giving that to you as of now.</p>
+
+            <p>Tangibly, emotional outlets for me are important. Your point on kickboxing was interesting as physical outlets have been my go-to for stress. I apologize for letting my stress boil over into our relationship. This disagreement (and distress I put on you) has made me really internalize monitoring my behavior towards you when I am stressed. Going forward, I will identify real outlets that work in the moment, whether that be gym, runs, or something else. I need to move away from sending damaging words your way when I feel hurt from things that have nothing to do with you.</p>
+
+            <p>Though I began this with acknowledging the harm I caused, I now would like to say that "I love you." I really fucking love you. I love eating steak and drinking out of a plastic boot with you. I love driving through Marin's green hills with you. I love falling asleep beside you during a snowstorm. I love transpacific gecko photos and every single frog we've shared between us. I love all of the moments we have created together, and the idea of a world of so many more future moments - I love it all. I am incredibly sorry I have continuously failed in my role as a boyfriend. I look forward to changing that going forward; to become a partner that is as amazing as you are. To become the partner that you deserve.</p>
+
+            <div class="signature">
+                Lovingly, Isaiah
+                <!-- Heart near signature -->
+                <svg viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg" style="width: 40px; height: auto; margin-left: 10px; display: inline-block; vertical-align: middle;">
+                    <path d="M 10 12 Q 10 5 15 5 Q 20 5 20 10 Q 20 5 25 5 Q 30 5 30 12 Q 30 22 20 29 Q 10 22 10 12 Z" 
+                          stroke="#a8d5a8" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="16" cy="9" r="1.5" fill="#a8d5a8" opacity="0.5"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gecko scroll animation
+        let lastScrollTop = 0;
+        let scrollTimeout;
+        const gecko = document.getElementById('scrollGecko');
+        const marginFrogs = document.querySelectorAll('.margin-frog');
+        let isResetting = false;
+        let hasReachedBottom = false;
+        
+        window.addEventListener('scroll', function() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            
+            // Check if at bottom of page (within 5% threshold)
+            if (scrollPercent >= 95 && !isResetting && !hasReachedBottom) {
+                hasReachedBottom = true;
+                isResetting = true;
+                
+                // Remove walking animation
+                gecko.classList.remove('walking');
+                
+                // Start bottom run animation
+                gecko.classList.add('running-bottom');
+                
+                // After bottom animation, run up
+                setTimeout(function() {
+                    gecko.classList.remove('running-bottom');
+                    gecko.classList.add('running-up');
+                    
+                    // After running up, reset to normal scroll behavior
+                    setTimeout(function() {
+                        gecko.classList.remove('running-up');
+                        isResetting = false;
+                        hasReachedBottom = false;
+                        
+                        // Reset gecko style to initial position
+                        gecko.style.top = '10%';
+                        gecko.style.right = 'calc(50% + 370px)';
+                        gecko.style.transform = '';
+                    }, 1500);
+                }, 1500);
+                
+                return;
+            }
+            
+            // Normal scroll behavior (only when not resetting)
+            if (!isResetting) {
+                // Reset hasReachedBottom if scrolling back up
+                if (scrollPercent < 90) {
+                    hasReachedBottom = false;
+                }
+                
+                // Position gecko based on scroll (between 10% and 85% of viewport height)
+                const geckoPosition = 10 + (scrollPercent / 100) * 75;
+                gecko.style.top = geckoPosition + '%';
+                
+                // Add walking animation while scrolling
+                gecko.classList.add('walking');
+                
+                // Remove walking animation after scrolling stops
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    gecko.classList.remove('walking');
+                }, 150);
+            }
+            
+            // Handle margin frogs disappearing based on scroll position
+            marginFrogs.forEach(function(frog) {
+                const threshold = parseInt(frog.getAttribute('data-scroll-threshold'));
+                if (scrollTop > threshold) {
+                    frog.classList.add('scrolled-past');
+                } else {
+                    frog.classList.remove('scrolled-past');
+                }
+            });
+            
+            lastScrollTop = scrollTop;
+        });
+    </script>
+</body>
+</html>
